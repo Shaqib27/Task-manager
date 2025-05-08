@@ -51,7 +51,7 @@ app.post('/create', (req, res) => {
 });
 
 app.post('/delete/:fileName', (req, res) => {
-    const filePath = path.join(__dirname, 'files', req.params.fileName) + '.txt';
+    const filePath = path.join(__dirname, 'files', req.params.fileName);
     fs.unlink(filePath, (err) => {
         if (err) {
             console.error("Delete error:", err);
