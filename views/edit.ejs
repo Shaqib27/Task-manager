@@ -5,19 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/style/output.css" rel="stylesheet">
-    <title>Home Page</title>
+    <title>Edit Page</title>
 
 </head>
 
-<body class="bg-gray-500">
-
-
-    <h1>edit page chal raha hai</h1>
+<body class="bg-gray-500 mt-6">
     <div class="form max-w-xl w-full bg-gray-800 mx-auto p-6 rounded-lg shadow-lg">
         <form action="/edit/<%=filename%>" method="post" class="space-y-6">
-            <div>
-                <label>Current File Name</label>
-                <h2>File Name</h2>
+            <div class="ml-2">
+                <label class="text-amber-50">Current File Name</label>
+                <h2 class="text-amber-100 font-bold text-3xl mt-" 2><%=filename%></h2>
             </div>
             <div>
                 <label for="newtitle" class="block text-sm font-medium text-gray-300 mb-1">New File Name </label>
@@ -30,6 +27,7 @@
                 Change File Name
             </button>
 
+            <a href="/" class="text-blue-500">Back to Home</a>
         </form>
     </div>
 </body>
