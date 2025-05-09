@@ -57,12 +57,15 @@
                         <%= file.content || 'No Content' %>
                     </p>
                     <a href="/show/<%= file.title %>" class="text-amber-400 hover:underline">→ Read Full Content</a>
-                    <form action="/delete/<%= file.title %>" method="post" class="mt-4 self-end">
-                        <button type="submit"
-                            class="text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">
-                            Delete
-                        </button>
-                    </form>
+                    <div class="flex justify-between mt-4">
+                        <a href="/edit/<%=file.title%>">Edit</a>
+                        <form action="/delete/<%= file.title %>" method="post" class="self-end">
+                            <button type="submit"
+                                class="text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <% }) %>

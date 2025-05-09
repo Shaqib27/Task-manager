@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
+// app.use(express.urlencoded({ extended: true }));
 
 
 
@@ -19,11 +20,11 @@ app.get('/', (req, res) => {
         const files = filenames.map((filename) => {
             const content = fs.readFileSync(path.join('./files', filename), 'utf8');
             return {
-                title: filename.replace('.txt', ''), // remove .txt extension
+                title: filename.replace('.txt', ''),
                 content: content
             };
         });
-        res.render('home', { files }); // ✅ Pass array of objects with name + content
+        res.render('home', { files });
     });
 });
 
@@ -35,13 +36,35 @@ app.get("/show/:filename", (req, res) => {
         });
     })
 })
+app.get("/edit/:filename", (req, res) => {
+    const filename = req.params.filename;
+    console.log("old name ", filename);
+
+    res.render('edit', { filename });
+})
+
+app.post("/edit/:filename", (req, res) => {
+    const oldName = req.params.filename + '.txt';
+    console.log(oldName);
+    const newName = req.body.newtitle.split(' ').join('') + '.txt';
+    console.log(newName);
+    const oldPath = path.resolve('files', oldName);
+    const newPath = path.resolve('files', newName);
+
+    fs.rename(oldPath, newPath, (err) => {
+        if (err) {
+            console.log("Rename failed :", err);
+            return res.status(500).send("Rename Failed :");
+        }
+        res.redirect('/');
+    });
+});
 app.post('/create', (req, res) => {
     const fileName = req.body.title.split(' ').join('') + '.txt';
     console.log("filename", fileName);
     fs.writeFile(`./files/${fileName}`, req.body.content, (err) => {
         if (err) throw err;
 
-        // ✅ Read all files again with proper structure
         fs.readdir('./files', (err, filenames) => {
             if (err) throw err;
 
@@ -53,7 +76,7 @@ app.post('/create', (req, res) => {
                 };
             });
 
-            res.render('home', { files }); // ✅ Now it has title and content
+            res.render('home', { files });
         });
     });
 });
