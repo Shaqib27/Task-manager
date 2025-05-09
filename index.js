@@ -27,9 +27,17 @@ app.get('/', (req, res) => {
     });
 });
 
-
+app.get("/show/:filename", (req, res) => {
+    fs.readFile(`./files/${req.params.filename}.txt`, 'utf-8', (err, datacontent) => {
+        res.render('show', {
+            filename: req.params.filename,
+            content: datacontent
+        });
+    })
+})
 app.post('/create', (req, res) => {
     const fileName = req.body.title.split(' ').join('') + '.txt';
+    console.log("filename", fileName);
     fs.writeFile(`./files/${fileName}`, req.body.content, (err) => {
         if (err) throw err;
 
@@ -40,7 +48,7 @@ app.post('/create', (req, res) => {
             const files = filenames.map((filename) => {
                 const content = fs.readFileSync(path.join('./files', filename), 'utf8');
                 return {
-                    title: filename,
+                    title: filename.replace('.txt', ''),
                     content: content
                 };
             });
@@ -51,7 +59,8 @@ app.post('/create', (req, res) => {
 });
 
 app.post('/delete/:fileName', (req, res) => {
-    const filePath = path.join(__dirname, 'files', req.params.fileName);
+    const filePath = path.join(__dirname, 'files', req.params.fileName) + '.txt';
+    console.log("path from delete ", filePath);
     fs.unlink(filePath, (err) => {
         if (err) {
             console.error("Delete error:", err);

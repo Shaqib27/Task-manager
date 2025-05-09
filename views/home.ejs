@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./style/output.css" rel="stylesheet">
+    <link href="/style/output.css" rel="stylesheet">
     <title>Home Page</title>
 
 </head>
@@ -56,7 +56,7 @@
                     <p class="text-gray-300 mb-3">
                         <%= file.content || 'No Content' %>
                     </p>
-
+                    <a href="/show/<%= file.title %>" class="text-amber-400 hover:underline">→ Read Full Content</a>
                     <form action="/delete/<%= file.title %>" method="post" class="mt-4 self-end">
                         <button type="submit"
                             class="text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">
