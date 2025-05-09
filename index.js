@@ -38,16 +38,12 @@ app.get("/show/:filename", (req, res) => {
 })
 app.get("/edit/:filename", (req, res) => {
     const filename = req.params.filename;
-    console.log("old name ", filename);
-
     res.render('edit', { filename });
 })
 
 app.post("/edit/:filename", (req, res) => {
     const oldName = req.params.filename + '.txt';
-    console.log(oldName);
     const newName = req.body.newtitle.split(' ').join('') + '.txt';
-    console.log(newName);
     const oldPath = path.resolve('files', oldName);
     const newPath = path.resolve('files', newName);
 
